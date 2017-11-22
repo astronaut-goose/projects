@@ -13,6 +13,7 @@ public:
   Task();
   ~Task();
 
+  int NOWAZMIENNA;
   void getLastLine();
   void init();
   void addTask(std::string task_name);

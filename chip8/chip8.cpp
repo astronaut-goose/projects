@@ -73,6 +73,7 @@ void Chip8::initialize(){
 
 
 void Chip8::loadGame(){
+
   initialize();
 
   const char* filename = "pong.rom";
