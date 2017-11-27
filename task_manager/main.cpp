@@ -3,16 +3,18 @@
 
 #include "task.h"
 
-std::string add;
+std::string taskName;
 int pid = 0;
 
 void PrintHelp()
 {
     std::cout <<
-            "--add    <'task'>:      Add a task to the program\n"
-            "--delete <task ID>:     Delete a task\n"
-            "--show:                 Lists your tasks\n"
-            "--help:                 Show help\n";
+            "--add    <'task'>:                 Add a task to the program\n"
+            "--delete <task ID>:                Delete a task\n"
+            "--update <task ID>:                Choose which task to update\n"
+            "--task   <'new task'>:             Name your updated task\n"
+            "--show:                            Lists your tasks\n"
+            "--help:                            Show help\n";
     exit(1);
 }
 
@@ -20,10 +22,12 @@ void ProcessArgs(int argc, char** argv)
 {
     Task task;
 
-    const char* const short_opts = "a:d:sh";
+    const char* const short_opts = "a:d:u:t:sh";
     const option long_opts[] = {
             {"add",       required_argument, nullptr, 'a'},
             {"delete",    required_argument, nullptr, 'd'},
+            {"update",    required_argument, nullptr, 'u'},
+            {"task",      required_argument, nullptr, 't'},
             {"show",      no_argument,       nullptr, 's'},
             {"help",      no_argument,       nullptr, 'h'},
             {nullptr,     0,                 nullptr,   0}
@@ -38,15 +42,27 @@ void ProcessArgs(int argc, char** argv)
 
         switch (opt)
         {
+
         case 'a':
-            add = std::string(optarg);
-            task.addTask(add);
-            std::cout << "Task: " << add << " added to the list" << '\n';
+            taskName = std::string(optarg);
+            task.addTask(taskName);
+            std::cout << "Task: " << taskName << " added to the list" << '\n';
             break;
 
         case 'd':
             pid = std::stof(optarg);
-            std::cout << "Deleted: " << pid << std::endl;
+            task.deleteTask(pid);
+            std::cout << "Deleted task number: " << pid << std::endl;
+            break;
+
+        case 'u':
+            pid = std::stof(optarg);
+            break;
+
+        case 't':
+            taskName = std::string(optarg);
+            task.updateTask(pid, taskName);
+            std::cout << "Updated task number: " << pid << std::endl;
             break;
 
         case 's':
@@ -60,12 +76,19 @@ void ProcessArgs(int argc, char** argv)
             break;
         }
     }
+    if (optind < argc) {
+        printf("non-option ARGV-elements: ");
+        while (optind < argc)
+            printf("%s ", argv[optind++]);
+        printf("\n");
+    }
 }
 
 int main(int argc, char** argv)
 {
-  ProcessArgs(argc, argv);
-  Task task2;
-  task2.getLastLine();
-  return 0;
+    Task checkDB;
+    checkDB.checkDB();
+
+    ProcessArgs(argc, argv);
+    return 0;
 }

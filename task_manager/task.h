@@ -7,20 +7,18 @@ class Task
 {
 public:
 
-  //static int pid;         // process id
-  //int pid;
+    //static int pid;         // process id
+    //int pid;
 
-  Task();
-  ~Task();
+    Task();
+    ~Task();
 
-  int NOWAZMIENNA;
-  void getLastLine();
-  void init();
-  void addTask(std::string task_name);
-  int generateID();
-  //void add();
-  void del();
-  void show();
+    void checkDB();
+    void show();
+    void addTask(std::string taskName);
+    void deleteTask(int taskID);
+    void updateTask(int taskID, std::string taskName);
+
 
 };
 
