@@ -30,12 +30,14 @@ int rc;                     // managing database requests
 const char *sql;            // for SQL statements
 sqlite3_stmt* st;
 const char* data = "Callback function called";
-const char* db_name = "taskDB.db";
+//const char* db_name = "taskDB.db";
+const char* uri = "file:/home/lukasz/Desktop/cpp_projects/task_manager/taskDB.db";
 
 void Task::checkDB()
 {
     // OPEN DATABASE
-    rc = sqlite3_open(db_name, &db);
+    //rc = sqlite3_open(db_name, &db);
+    rc = sqlite3_open_v2(uri, &db, SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE | SQLITE_OPEN_URI, NULL);
 
     if(rc){
         fprintf(stderr, "can't open database: %s\n", sqlite3_errmsg(db));
@@ -60,7 +62,8 @@ void Task::checkDB()
 void Task::show()
 {
     // OPEN DATABASE
-    rc = sqlite3_open(db_name, &db);
+    //rc = sqlite3_open(db_name, &db);
+    rc = sqlite3_open_v2(uri, &db, SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE | SQLITE_OPEN_URI, NULL);
 
     if(rc){
         fprintf(stderr, "can't open database: %s\n", sqlite3_errmsg(db));
@@ -87,7 +90,8 @@ void Task::show()
 void Task::addTask(std::string taskName)
 {
     // OPEN DATABASE
-    rc = sqlite3_open(db_name, &db);
+    //rc = sqlite3_open(db_name, &db);
+    rc = sqlite3_open_v2(uri, &db, SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE | SQLITE_OPEN_URI, NULL);
 
     if(rc){
         fprintf(stderr, "can't open database: %s\n", sqlite3_errmsg(db));
@@ -117,7 +121,8 @@ void Task::addTask(std::string taskName)
 void Task::updateTask(int taskID, std::string taskName)
 {
     // OPEN DATABASE
-    rc = sqlite3_open(db_name, &db);
+    //rc = sqlite3_open(db_name, &db);
+    rc = sqlite3_open_v2(uri, &db, SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE | SQLITE_OPEN_URI, NULL);
 
     if(rc){
         fprintf(stderr, "can't open database: %s\n", sqlite3_errmsg(db));
@@ -147,7 +152,8 @@ void Task::updateTask(int taskID, std::string taskName)
 void Task::deleteTask(int taskID)
 {
     // OPEN DATABASE
-    rc = sqlite3_open(db_name, &db);
+    //rc = sqlite3_open(db_name, &db);
+    rc = sqlite3_open_v2(uri, &db, SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE | SQLITE_OPEN_URI, NULL);
 
     if(rc){
         fprintf(stderr, "can't open database: %s\n", sqlite3_errmsg(db));
