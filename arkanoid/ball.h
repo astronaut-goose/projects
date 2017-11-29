@@ -4,8 +4,9 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 
+#include "constants.h"
+
 constexpr float ballRadius{10.f}, ballVelocity{8.f};
-constexpr int windowWidth{800}, windowHeight{600}; // naprawd, zrób to jako globalną
 
 class Ball
 {
@@ -16,7 +17,8 @@ public:
 
     // CircleShape is an SFML class that defines a renderable circle
     sf::CircleShape shape;
-    sf::Vector2f velocityBall{-ballVelocity, -ballVelocity};
+    // 2D vector that stores paddle's velocity
+    sf::Vector2f velocity{-ballVelocity, -ballVelocity};
     // Updating the ball: move its shape by the current velocity
     void update();
 

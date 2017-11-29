@@ -1,11 +1,5 @@
 #include "ball.h"
 
-//constexpr float ballRadius{10.f}, ballVelocity{8.f};
-//constexpr int windowWidth{800}, windowHeight{600}; // naprawd, zrób to jako globalną
-
-// 2D vector that stores ball's velocity
-//sf::Vector2f velocityBall{-ballVelocity, -ballVelocity};
-
 // Ball constructor
 // mX -> starting x coordinate
 // mY -> starting y coordinate
@@ -20,20 +14,18 @@ Ball::Ball(float mX, float mY)
 
 Ball::~Ball(){};
 
-//Ball.velocity{-ballVelocity, -ballVelocity};
-
 void Ball::update()
 {
-    shape.move(velocityBall);
+    shape.move(velocity);
 
     // Keep the ball inside the screen
-    if(left() < 0) velocityBall.x = ballVelocity;
+    if(left() < 0) velocity.x = ballVelocity;
 
-    else if(right() > windowWidth) velocityBall.x = -ballVelocity;
+    else if(right() > myConstants::windowWidth) velocity.x = -ballVelocity;
 
-    if(top() < 0) velocityBall.y = ballVelocity;
+    if(top() < 0) velocity.y = ballVelocity;
 
-    else if(bottom() > windowHeight) velocityBall.y = -ballVelocity;
+    else if(bottom() > myConstants::windowHeight) velocity.y = -ballVelocity;
 }
 float Ball::x()         { return shape.getPosition().x; }
 float Ball::y()         { return shape.getPosition().y; }

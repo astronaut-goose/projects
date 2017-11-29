@@ -4,6 +4,10 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 
+#include "constants.h"
+
+constexpr float paddleWidth{60.f}, paddleHeight{20.f}, paddleVelocity{6.f};
+
 class Paddle
 {
 public:
@@ -13,7 +17,8 @@ public:
 
     // RectangleShape is an SFML class that defines a renderable circle
     sf::RectangleShape shape;
-
+    // 2D vector that stores paddle's velocity
+    sf::Vector2f velocity;
     // Updating the ball: move its shape by the current velocity
     void update();
 

@@ -1,22 +1,34 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 
+#include "constants.h"
+
 #include "ball.h"
 #include "paddle.h"
+#include "brick.h"
 #include "collision.h"
-
-constexpr int windowWidth{800}, windowHeight{600};
 
 int main()
 {
     // Create instance of Ball (at the center of the window)
-    Ball ball{windowWidth / 2, windowHeight /2 };
+    Ball ball{myConstants::windowWidth / 2, myConstants::windowHeight / 2};
 
     // Create instance of Paddle
-    Paddle paddle{windowWidth / 2, windowHeight - 50};
+    Paddle paddle{myConstants::windowWidth / 2, myConstants::windowHeight - 50};
+
+    // Create instances (40) of Bricks
+    std::vector<Brick> bricks;
+
+    for (size_t i = 0; i < countBlocksX; i++){
+        for (size_t y = 0; y < countBlocksY; y++) {
+            bricks.emplace_back((i + 1) * (blockWidth + 3) + 22,
+                                (y + 2) * (blockHeight + 3));
+        }
+    }
+
 
     // Create game window
-    sf::RenderWindow window{{windowWidth, windowHeight}, "Arkanoid v1"};
+    sf::RenderWindow window{{myConstants::windowWidth, myConstants::windowHeight}, "Arkanoid v1"};
     window.setFramerateLimit(60);
 
     // Game loop
@@ -36,10 +48,27 @@ int main()
         // Testing collision every loop iteration
         testCollision(paddle, ball);
 
+        // Testing collision with all the bricks every loop iteration
+        for(auto& brick : bricks) testCollision(brick, ball);
+
+        /* And destroying every touched brick
+         *
+         * bricks.erase (start_iterator, end_iterator); <- deletes everyting inbetween 2 iterators
+         * remove_if (begin(bricks), end(bricks),
+         *
+         *
+        */
+
+        bricks.erase(remove_if(begin(bricks), end(bricks),
+            [](const Brick& mBrick){return mBrick.isDestroyed; }),
+            end(bricks));
+
         // Render Ball
         window.draw(ball.shape);
         // Render Paddle
         window.draw(paddle.shape);
+        // Render bricks -- foreach loop
+        for(auto& brick : bricks) window.draw(brick.shape);
 
         // Show window contents
         window.display();

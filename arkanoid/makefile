@@ -1,5 +1,5 @@
 #OBJS specifies which files to compile as part of the project
-OBJS = main.cpp ball.cpp ball.h paddle.cpp paddle.h collision.cpp collision.h
+OBJS = main.cpp constants.h ball.cpp ball.h paddle.cpp paddle.h brick.h brick.cpp collision.cpp collision.h
 
 #CC specifies which compiler we're using
 CC = g++
@@ -7,7 +7,7 @@ CC = g++
 #COMPILER_FLAGS specifies the additional compilation options we're using
 # -w suppresses all warnings
 # -std=c++11
-COMPILER_FLAGS = -std=c++11 -g
+COMPILER_FLAGS = -std=c++11 -O3
 
 #LINKER_FLAGS specifies the libraries we're linking against
 LINKER_FLAGS = -lsfml-system -lsfml-graphics -lsfml-window -lsfml-audio

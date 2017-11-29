@@ -1,11 +1,5 @@
 #include "paddle.h"
 
-constexpr float paddleWidth{60.f}, paddleHeight{20.f}, paddleVelocity{6.f};
-constexpr int windowWidth{800}, windowHeight{600}; // napraw, zrób to jako globalną
-
-// 2D vector that stores paddle's velocity
-sf::Vector2f velocityPaddle;
-
 // Paddle constructor
 // mX -> starting x coordinate
 // mY -> starting y coordinate
@@ -22,18 +16,18 @@ Paddle::~Paddle(){};
 
 void Paddle::update()
 {
-    shape.move(velocityPaddle);
+    shape.move(velocity);
 
     // Keep the ball inside the screen
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left)
         && left() > 0){
-        velocityPaddle.x = -paddleVelocity;
+        velocity.x = -paddleVelocity;
     }
     else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right)
-        && right() < windowWidth){
-        velocityPaddle.x = paddleVelocity;
+        && right() < myConstants::windowWidth){
+        velocity.x = paddleVelocity;
     }
-    else velocityPaddle.x = 0;
+    else velocity.x = 0;
 
 }
 float Paddle::x()         { return shape.getPosition().x; }
